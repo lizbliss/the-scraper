@@ -26,7 +26,13 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://heroku_skgxlkbn:bc8fuu0fahaj95ssdkdk7nd8jd@ds139781.mlab.com:39781/heroku_skgxlkbn");
+var databaseUri = "mongodb://localhost/mongoosearticles";
+if (process.env.MONGODB_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+} else {
+    mongoose.connect(databaseUri);
+}
+
 var db = mongoose.connection;
 
 // Show any mongoose errors
